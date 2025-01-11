@@ -54,7 +54,7 @@ function App() {
   return (
     <main className="px-4 py-2">
       <Overview />
-      <div className="grid lg:grid-cols-2 gap-4 mb-4 mt-3">
+      <div className="grid overflow-x-scroll lg:grid-cols-2 gap-4 mb-4 mt-3">
         <LineChart label={"Growth of EV Adoption"} data={productionByYear} />
         <BarChart
           filterYear={popularityYear}

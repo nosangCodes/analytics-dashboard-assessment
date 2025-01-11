@@ -7,7 +7,7 @@ import Sidebar from "./components/sidebar.jsx";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Sidebar />
-    <div className="ml-[105px]">
+    <div className="md:ml-[105px]">
       <App />
     </div>
   </StrictMode>
