@@ -1,10 +1,12 @@
 import fetchEvData from "./fetch-ev-data";
 
-const fetchMakeCount = async () => {
+const fetchMakeCount = async (year) => {
   try {
     const evData = await fetchEvData("/ev-data.csv");
     const makeCount = evData.reduce((count, ev) => {
-      count[ev["Make"]] = (count[ev["Make"]] || 0) + 1;
+      if (parseInt(ev["Model Year"]) === year) {
+        count[ev["Make"]] = (count[ev["Make"]] || 0) + 1;
+      }
       return count;
     }, {});
 

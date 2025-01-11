@@ -14,21 +14,14 @@ function App() {
   const [priceRange, setPriceRange] = useState([]);
   const [evTypes, setEvTypes] = useState([]);
   const [productionByYear, setProductionByYear] = useState([]);
+  const [popularityYear, setPopularityYear] = useState(
+    new Date().getFullYear() - 1
+  );
 
   useEffect(() => {
-    const getMakeCount = async () => {
-      try {
-        const res = await fetchMakeCount();
-        setMakeCount(res);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
     const getTrendsData = async () => {
       try {
         const res = await fetchTrendsData();
-        console.log("🚀 ~ getTrendsData ~ res:", res);
         setEvTypes(res?.evTypeCount);
         setPriceRange(res?.priceRange);
         setProductionByYear(res?.evsByProductionYear);
@@ -37,18 +30,38 @@ function App() {
       }
     };
 
-    getMakeCount();
     getTrendsData();
 
     return () => {};
   }, []);
+
+  useEffect(() => {
+    const getMakeCount = async () => {
+      try {
+        const res = await fetchMakeCount(popularityYear);
+        setMakeCount(res);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getMakeCount();
+    // return () => {
+    //   setMakeCount([]);
+    //   setPopularityYear(new Date().getFullYear() - 1);
+    // };
+  }, [popularityYear]);
 
   return (
     <main className="px-4 py-2">
       <Overview />
       <div className="grid lg:grid-cols-2 gap-4 mb-4 mt-3">
         <LineChart label={"Growth of EV Adoption"} data={productionByYear} />
-        <BarChart label={"Popularity by Manufacturer"} data={makeCount} />
+        <BarChart
+          filterYear={popularityYear}
+          setFilterYear={setPopularityYear}
+          label={"Popularity by Manufacturer"}
+          data={makeCount}
+        />
         <ScatterChart label={"Price vs. Range Analysis"} data={priceRange} />
         <PieChart label={"Electric Vehicle Type"} data={evTypes} />
       </div>
