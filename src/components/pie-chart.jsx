@@ -2,7 +2,6 @@ import {
   PieChart as MuiPieChart,
   pieArcLabelClasses,
 } from "@mui/x-charts/PieChart";
-import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
 
 
 export default function PieChart({ label, data }) {

@@ -14,8 +14,8 @@ const fetchMakeCount = async (year) => {
 
     Object.entries(makeCount).map((entry) => {
       result.push({
-        make: entry[0],
-        count: entry[1],
+        label: entry[0],
+        value: entry[1],
       });
     });
     return result;

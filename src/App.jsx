@@ -17,14 +17,21 @@ function App() {
   const [popularityYear, setPopularityYear] = useState(
     new Date().getFullYear() - 1
   );
+  const [evsByCounty, setEvsByCounty] = useState([]);
 
   useEffect(() => {
     const getTrendsData = async () => {
       try {
         const res = await fetchTrendsData();
+        console.log("🚀 ~ getTrendsData ~ res?.evsByCounty:", res?.evsByCounty);
+        console.log(
+          "🚀 ~ getTrendsData ~ res?.evsByProductionYear:",
+          res?.evsByProductionYear
+        );
         setEvTypes(res?.evTypeCount);
         setPriceRange(res?.priceRange);
         setProductionByYear(res?.evsByProductionYear);
+        setEvsByCounty(res?.evsByCounty);
       } catch (error) {
         console.error(error);
       }
@@ -45,10 +52,6 @@ function App() {
       }
     };
     getMakeCount();
-    // return () => {
-    //   setMakeCount([]);
-    //   setPopularityYear(new Date().getFullYear() - 1);
-    // };
   }, [popularityYear]);
 
   return (
@@ -62,6 +65,7 @@ function App() {
           label={"Popularity by Manufacturer"}
           data={makeCount}
         />
+        <BarChart label={"Evs by County"} data={evsByCounty} />
         <ScatterChart label={"Price vs. Range Analysis"} data={priceRange} />
         <PieChart label={"Electric Vehicle Type"} data={evTypes} />
       </div>

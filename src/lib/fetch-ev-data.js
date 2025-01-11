@@ -27,6 +27,7 @@ export async function fetchTrendsData() {
   const priceRange = {};
   const evTypeCount = {};
   const evsByProductionYear = {};
+  const evsByCounty = {};
 
   if (evData && evData?.length > 0) {
     evData.forEach((item) => {
@@ -53,6 +54,8 @@ export async function fetchTrendsData() {
 
       evsByProductionYear[item["Model Year"]] =
         (evsByProductionYear[item["Model Year"]] || 0) + 1;
+
+      evsByCounty[item["County"]] = (evsByCounty[item["County"]] || 0) + 1;
     });
   }
 
@@ -66,39 +69,19 @@ export async function fetchTrendsData() {
       x: item[0],
       y: item[1],
     })),
+    evsByCounty: Object.entries(evsByCounty).map((item) => ({
+      label: item[0],
+      value: item[1],
+    })),
   };
 }
-
-export async function fetchEvTypeCount() {
-  const evData = await fetchEvData();
-  const result = {};
-
-  if (evData && evData.length > 0) {
-    evData.forEach((item) => {
-      result[item["Electric Vehicle Type"]] =
-        (result[item["Electric Vehicle Type"]] || 0) + 1;
-    });
-  }
-
-  return Object.entries(result).map((item) => ({
-    label: item?.[0],
-    value: parseInt(item?.[1]),
-  }));
-}
-
-export async function evsProductionByYear() {
-  const evData = await fetchEvData();
-  const result = {};
-
-  if (evData && evData.length > 0) {
-    evData.forEach((item) => {
-      result[item["Electric Vehicle Type"]] =
-        (result[item["Electric Vehicle Type"]] || 0) + 1;
-    });
-  }
-
-  return Object.entries(result).map((item) => ({
-    label: item?.[0],
-    value: parseInt(item?.[1]),
-  }));
-}
+// export async function fetchEvsByCounty() {
+//   const evData = await fetchEvData();
+//   const result = {};
+//   if (evData && evData.length > 0) {
+//     evData.forEach((item) => {
+//       result[item["County"]] = (result[item["County"]] || 0) + 1;
+//     });
+//   }
+//   return result;
+// }
