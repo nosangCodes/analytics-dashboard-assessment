@@ -12,8 +12,8 @@ const fetchMakeCount = async () => {
 
     Object.entries(makeCount).map((entry) => {
       result.push({
-        label: entry[0],
-        value: entry[1],
+        make: entry[0],
+        count: entry[1],
       });
     });
     return result;

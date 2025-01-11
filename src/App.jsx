@@ -4,24 +4,16 @@ import "./App.css";
 import Overview from "./components/overview";
 import PieChart from "./components/pie-chart";
 import fetchMakeCount from "./lib/fetch-make-count";
+import { fetchTrendsData } from "./lib/fetch-ev-data";
+import ScatterChart from "./components/scatter-chart";
+import BarChart from "./components/bar-chart";
+import LineChart from "./components/line-chart";
 
 function App() {
   const [makeCount, setMakeCount] = useState([]);
-  // const [jsonData, setJsonData] = useState([]);
-
-  // useEffect(() => {
-  //   const fetchAndParseCsv = async () => {
-  //     try {
-  //       const data = await fetchEvData("/ev-data.csv"); // Path relative to `public` folder
-  //       console.log("🚀 ~ fetchAndParseCsv ~ data:", data);
-  //       setJsonData(data);
-  //     } catch (error) {
-  //       console.error("Error loading CSV:", error);
-  //     }
-  //   };
-
-  //   // fetchAndParseCsv();
-  // }, []);
+  const [priceRange, setPriceRange] = useState([]);
+  const [evTypes, setEvTypes] = useState([]);
+  const [productionByYear, setProductionByYear] = useState([]);
 
   useEffect(() => {
     const getMakeCount = async () => {
@@ -33,17 +25,32 @@ function App() {
       }
     };
 
+    const getTrendsData = async () => {
+      try {
+        const res = await fetchTrendsData();
+        console.log("🚀 ~ getTrendsData ~ res:", res);
+        setEvTypes(res?.evTypeCount);
+        setPriceRange(res?.priceRange);
+        setProductionByYear(res?.evsByProductionYear);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     getMakeCount();
+    getTrendsData();
 
     return () => {};
   }, []);
-  console.log("🚀 ~ App ~ makeCount:", makeCount);
 
   return (
     <main className="px-4 py-2">
       <Overview />
-      <div className="grid gap-3 mt-3">
-        <PieChart label={"Popularity by Manufacturer"} data={makeCount} />
+      <div className="grid lg:grid-cols-2 gap-4 mb-4 mt-3">
+        <LineChart label={"Growth of EV Adoption"} data={productionByYear} />
+        <BarChart label={"Popularity by Manufacturer"} data={makeCount} />
+        <ScatterChart label={"Price vs. Range Analysis"} data={priceRange} />
+        <PieChart label={"Electric Vehicle Type"} data={evTypes} />
       </div>
     </main>
   );
