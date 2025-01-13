@@ -3,6 +3,7 @@ import L from "leaflet";
 import "leaflet.heat";
 import { useEffect } from "react";
 import { Loader2 } from "lucide-react";
+import { Icon } from "leaflet";
 
 const HeatmapLayer = ({ data }) => {
   const map = useMap();
@@ -57,7 +58,18 @@ export default function EvsHeatMap({ codes, selectedCity, loading }) {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={codes[0]}>
+        <Marker
+          icon={
+            new Icon({
+              iconUrl:
+                "https://img.icons8.com/ios-filled/50/03C937/flag--v1.png",
+              iconSize: [35, 35],
+              iconAnchor: [17, 46],
+              popupAnchor: [-3, -76],
+            })
+          }
+          position={codes[0]}
+        >
           <Popup>{selectedCity}</Popup>
         </Marker>
         <HeatmapLayer data={codes} />
