@@ -1,8 +1,45 @@
-# React + Vite
+# EV Stats
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[Live Demo](https://ev-stats.vercel.app/)
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Growth of EV Adoption**: Visualize the adoption rate and growth of electric vehicles across regions.
+- **Popularity by Manufacturer**: View data on how electric vehicle brands are performing in the market.
+- **EVs by County**: Track the number of EVs registered by different counties.
+- **Price vs. Range Analysis**: A chart comparing the price of electric vehicles against their range.
+- **Electric Vehicle Type**: Categorization and comparison of different types of electric vehicles.
+- **Heat Map of EV Vehicles**: Interactive heat map showing the distribution of electric vehicles, filterable by city.
+
+## Installation
+
+To run this project locally, follow the steps below:
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/nosangCodes/analytics-dashboard-assessment.git
+   ```
+
+2. Navigate to Project directory:
+
+    ``` bash
+    cd ./analytics-dashboard-assessment
+    ```
+
+3. Install the dependencies:
+
+   ```bash
+   npm install --legacy-peer-deps
+    ```
+
+4. Run the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+## Technologies Used
+
+- **MUI Charts** - A Material-UI-based library for responsive and customizable charts.
+- **React Leaflet** - A leading open-source JavaScript library for interactive maps.
