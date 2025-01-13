@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { fetchCities, fetchEvLocations } from "../lib/fetch-ev-data";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import EvsHeatMap from "../components/evs-heat-map";
@@ -7,6 +7,7 @@ export default function Geographic() {
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
   const [geoCodes, setGeoCodes] = useState([]);
+  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
     const getCities = async () => {
@@ -21,7 +22,9 @@ export default function Geographic() {
   useEffect(() => {
     const getEvLocations = async () => {
       const result = await fetchEvLocations(selectedCity);
-      setGeoCodes(result);
+      startTransition(() => {
+        setGeoCodes(result);
+      });
     };
 
     getEvLocations();
@@ -55,7 +58,11 @@ export default function Geographic() {
           </Select>
         </FormControl>
       </div>
-      <EvsHeatMap selectedCity={selectedCity} codes={geoCodes} />
+      <EvsHeatMap
+        loading={isPending}
+        selectedCity={selectedCity}
+        codes={geoCodes}
+      />
     </div>
   );
 }

@@ -1,28 +1,36 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import fetchOverviewData from "../lib/fetch-overview-data";
+import { Loader2 } from "lucide-react";
 
 export default function Overview() {
   const [overviews, setOverviews] = useState([]);
+  const [isPending, startTransition] = useTransition();
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchOverviewData();
+    const getData = async () => {
+      const data = await fetchOverviewData();
+      startTransition(() => {
         setOverviews(data);
-      } catch (error) {
-        console.error("error fetching overviewdata", error);
-      }
+      });
     };
-    fetchData();
+
+    getData();
   }, []);
 
   return (
     <div className="flex flex-col">
       <h2 className="text-2xl font-semibold text-neutral-600">Overview</h2>
-      <div className="flex flex-col md:flex-row gap-2 min-h-[100px]">
-        {overviews.map((item, index) => (
-          <OverviewCard key={index} label={item.label} value={item.value} />
-        ))}
-      </div>
+      {isPending ? (
+        <div className="h-[100px] w-full flex justify-center  rounded-md  shadow-md items-center animate-pulse bg-neutral-700/40">
+          <Loader2 className="text-white animate-spin size-7" />
+        </div>
+      ) : (
+        <div className="flex flex-col md:flex-row gap-2 min-h-[100px]">
+          {overviews.map((item, index) => (
+            <OverviewCard key={index} label={item.label} value={item.value} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

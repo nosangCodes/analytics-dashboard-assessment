@@ -2,6 +2,7 @@ import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet.heat";
 import { useEffect } from "react";
+import { Loader2 } from "lucide-react";
 
 const HeatmapLayer = ({ data }) => {
   const map = useMap();
@@ -40,11 +41,11 @@ const RecenterAutomatically = ({ code }) => {
   return null;
 };
 
-export default function EvsHeatMap({ codes, selectedCity }) {
-  if (!codes?.length) {
+export default function EvsHeatMap({ codes, selectedCity, loading }) {
+  if (loading || !codes?.length) {
     return (
       <div className="min-h-[36rem] w-full bg-neutral-700/50 flex justify-center items-center animate-pulse">
-        <p className="text-white font-semibold text-3xl">Loading...</p>
+        <Loader2 className="animate-spin size-7" />
       </div>
     );
   }
