@@ -33,7 +33,7 @@ export default function BarChart({ label, data, setFilterYear, filterYear }) {
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={filterYear}
-              label="Select Make"
+              label="Select Year"
               onChange={(e) => setFilterYear(e.target.value)}
               size="small"
             >

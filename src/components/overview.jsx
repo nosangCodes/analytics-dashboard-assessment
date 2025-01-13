@@ -18,7 +18,7 @@ export default function Overview() {
   return (
     <div className="flex flex-col">
       <h2 className="text-2xl font-semibold text-neutral-600">Overview</h2>
-      <div className="flex flex-col md:flex-row gap-2">
+      <div className="flex flex-col md:flex-row gap-2 min-h-[100px]">
         {overviews.map((item, index) => (
           <OverviewCard key={index} label={item.label} value={item.value} />
         ))}

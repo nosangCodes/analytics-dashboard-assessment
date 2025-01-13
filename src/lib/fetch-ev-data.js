@@ -75,13 +75,42 @@ export async function fetchTrendsData() {
     })),
   };
 }
-// export async function fetchEvsByCounty() {
-//   const evData = await fetchEvData();
-//   const result = {};
-//   if (evData && evData.length > 0) {
-//     evData.forEach((item) => {
-//       result[item["County"]] = (result[item["County"]] || 0) + 1;
-//     });
-//   }
-//   return result;
-// }
+
+export async function fetchEvLocations(cityName) {
+  const evData = await fetchEvData();
+  const result = [];
+
+  if (cityName && evData && evData.length > 0) {
+    console.log("🚀 ~ fetchEvLocations ~ cityName:", cityName);
+    evData.forEach((item) => {
+      if (item["City"] == cityName) {
+        const geoCode = item["Vehicle Location"]
+          .split("(")[1]
+          .split(")")[0]
+          .split(" ")
+          .map((item) => parseFloat(item))
+          .reverse();
+
+        if (geoCode.length === 2) {
+          result.push(geoCode);
+        }
+      }
+    });
+  }
+
+  console.log("🚀 ~ fetchEvLocations ~ result:", result);
+  return result;
+}
+
+export async function fetchCities() {
+  const evData = await fetchEvData();
+  const cities = new Set();
+
+  if (evData && evData.length > 0) {
+    evData.forEach((item) => {
+      cities.add(item["City"]);
+    });
+  }
+
+  return [...cities];
+}

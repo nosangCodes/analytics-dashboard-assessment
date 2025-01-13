@@ -1,23 +1,18 @@
-import * as React from "react";
-import Map from "react-map-gl";
+import { Map, Marker } from "pigeon-maps";
 
-export default function TestMap() {
-  const [mapStyle, setMapStyle] = React.useState(null);
-
+export default function EvLocationMap({ codes }) {
+  console.log("🚀 ~ EvLocationMap ~ codes:", codes);
+  if (!codes?.[0]) {
+    return <p>Loading...</p>;
+  }
   return (
-    <>
-      <Map
-        initialViewState={{
-          latitude: 37.805,
-          longitude: -122.447,
-          zoom: 15.5,
-        }}
-        mapStyle={mapStyle && mapStyle.toJS()}
-        styleDiffing
-        mapboxAccessToken={MAPBOX_TOKEN}
-      />
-
-      <ControlPanel onChange={setMapStyle} />
-    </>
+    <div>
+      <Map height={600} defaultCenter={codes[0]} defaultZoom={5}>
+        <Marker width={50} anchor={codes[0]} />
+        {codes.map((code, index) => (
+          <Marker key={index} width={50} anchor={code} />
+        ))}
+      </Map>
+    </div>
   );
 }

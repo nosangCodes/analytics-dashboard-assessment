@@ -1,8 +1,26 @@
+import { NavLink } from "react-router-dom";
 
 export default function Sidebar() {
   return (
-    <div className="hidden flex-col fixed inset-y-0 left-0 md:flex md:w-[100px] shadow-md bg-white">
-      Filters
+    <div className="flex flex-row shadow-md bg-white">
+      <ul className="flex flex-row gap-3 p-2">
+        <li className="text-sm font-semibold p-2 hover:text-indigo-700">
+          <NavLink
+            className={({ isActive }) => isActive && "text-indigo-700"}
+            to={"/"}
+          >
+            Trends
+          </NavLink>
+        </li>
+        <li className="text-sm font-semibold p-2 hover:text-indigo-700">
+          <NavLink
+            className={({ isActive }) => isActive && "text-indigo-700"}
+            to={"/geo"}
+          >
+            HeatMap
+          </NavLink>
+        </li>
+      </ul>
     </div>
   );
 }
