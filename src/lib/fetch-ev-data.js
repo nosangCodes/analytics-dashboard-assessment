@@ -81,7 +81,6 @@ export async function fetchEvLocations(cityName) {
   const result = [];
 
   if (cityName && evData && evData.length > 0) {
-    console.log("🚀 ~ fetchEvLocations ~ cityName:", cityName);
     evData.forEach((item) => {
       if (item["City"] == cityName) {
         const geoCode = item["Vehicle Location"]
@@ -98,7 +97,6 @@ export async function fetchEvLocations(cityName) {
     });
   }
 
-  console.log("🚀 ~ fetchEvLocations ~ result:", result);
   return result;
 }
 
